@@ -389,9 +389,9 @@ void addStudent(struct Student students[], int *n) {
         fgets(new_student.email, sizeof(new_student.email), stdin);
         new_student.email[strcspn(new_student.email, "\n")] = '\0';
         if (strlen(new_student.email) == 0) {
-            printf("Error: Email cannot be empty.\n");
+            printf("\n\t\tError: Email cannot be empty.\n");
         } else if (strlen(new_student.email) > 14) { 
-            printf("Error: Email prefix cannot exceed 14 characters.\n");
+            printf("\n\t\tError: Email prefix cannot exceed 14 characters.\n");
         } else {
             strcat(new_student.email, "@gmail.com");
             break;
@@ -402,11 +402,11 @@ void addStudent(struct Student students[], int *n) {
         fgets(new_student.phone, sizeof(new_student.phone), stdin);
         new_student.phone[strcspn(new_student.phone, "\n")] = '\0';
         if (strlen(new_student.phone) == 0) {
-            printf("Error: Phone number cannot be empty.\n");
+            printf("\n\t\tError: Phone number cannot be empty.\n");
         } else if (strlen(new_student.phone) > 19) {
-            printf("Error: Phone number cannot exceed 19 characters.\n");
+            printf("\n\t\tError: Phone number cannot exceed 19 characters.\n");
         } else if (strspn(new_student.phone, "0123456789") != strlen(new_student.phone)) {
-            printf("Error: Phone number must contain only digits.\n");
+            printf("\n\t\tError: Phone number must contain only digits.\n");
         } else {
             break;
         }
@@ -414,7 +414,7 @@ void addStudent(struct Student students[], int *n) {
     while (1) {
         printf("\tInput number of courses: ");
         if (scanf("%d", &new_student.number_course) != 1 || new_student.number_course < 0) {
-            printf("Error: Number of courses must be a positive integer.\n");
+            printf("\n\t\tError: Number of courses must be a positive integer.\n");
             while (getchar() != '\n');
         } else {
             break;
@@ -460,7 +460,7 @@ void editStudent() {
             strcpy(students[found].classroom, temp_classroom);
             break;
         } else {
-            printSlowly("\n\tError: Classroom must be 1-10 characters\n",100);
+            printSlowly("\n\t\tError: Classroom must be 1-10 characters\n",100);
         }
     }
     while (1) {
@@ -493,19 +493,19 @@ void editStudent() {
         getchar();
     }
     while (1) {
-        printf("Gender (1 for Male, 0 for Female) (current: %s): ",
+        printf("\tGender (1 for Male, 0 for Female) (current: %s): ",
                students[found].gender ? "Male" : "Female");
         int gender_input;
         if (scanf("%d", &gender_input) == 1 && (gender_input == 0 || gender_input == 1)) {
             students[found].gender = gender_input;
             break;
         }
-        printf("Error: Gender must be 1 (Male) or 0 (Female)\n");
+        printf("\n\t\tError: Gender must be 1 (Male) or 0 (Female)\n");
         getchar();
     }
     getchar();
     while (1) {
-        printf("Email (current: %s): ", students[found].email);
+        printf("\tEmail (current: %s): ", students[found].email);
         char temp_email[20];
         fgets(temp_email, sizeof(temp_email), stdin);
         temp_email[strcspn(temp_email, "\n")] = '\0';
@@ -514,11 +514,11 @@ void editStudent() {
             strcpy(students[found].email, temp_email);
             break;
         } else {
-            printf("\tError: Email prefix cannot exceed 14 characters \n");
+            printf("\n\t\tError: Email prefix cannot exceed 14 characters \n");
         }
     }
     while (1) {
-        printf("Phone (current: %s): ", students[found].phone);
+        printf("\tPhone (current: %s): ", students[found].phone);
         char temp_phone[20];
         fgets(temp_phone, sizeof(temp_phone), stdin);
         temp_phone[strcspn(temp_phone, "\n")] = '\0';
@@ -536,7 +536,7 @@ void editStudent() {
             students[found].number_course = courses;
             break;
         }
-        printf("Error: Number of courses must be a non-negative integer\n");
+        printf("\n\t\tError: Number of courses must be a non-negative integer\n");
         getchar();
     }
     printf("\nStudent information updated successfully.\n");
@@ -548,14 +548,14 @@ void searchStudent() {
     }
     char search[50];
     while (1) {
-        printf("Enter the name or part of the name to search (1-49 characters): ");
+        printf("\tEnter the name or part of the name to search (1-49 characters): ");
         getchar();
 		fgets(search, sizeof(search), stdin);
         search[strcspn(search, "\n")] = '\0';
         if (strlen(search) == 0) {
-            printf("Error: Search string cannot be empty. Please try again ^ ^\n");
+            printf("\n\t\tError: Search string cannot be empty ^ ^\n");
         } else if (strlen(search) > 49) {
-            printf("Error: Search string is too long (max 49 characters)^ ^\n");
+            printf("\n\t\tError: Search string is too long (max 49 characters)^ ^\n");
         } else {
             break;
         }
@@ -772,7 +772,7 @@ void addTeacher(struct Teacher teachers[], int *t) {
         fflush(stdin);
         //scanf("%d", &new_teacher.class_number);
         if (scanf("%d", &new_teacher.class_number) != 1 || new_teacher.class_number < 0) {
-            printSlowly("\n\tError : Number of classroom number must be a positive integer", 50);
+            printSlowly("\n\t\tError : Number of classroom number must be a positive integer", 50);
             printSlowly(" ^ ^\n", 120);
             while (getchar() != '\n');
         } else {
@@ -1014,7 +1014,6 @@ void addClass(struct Classroom classrooms[], int *c){
 	while(1){
 		int id=0;
 		printf("\n\tInput ID : ");
-		//fflush(stdin);
 		getchar();
 		fgets(new_classroom.class_id,sizeof(new_classroom.class_id),stdin);
 		new_classroom.class_id[strcspn(new_classroom.class_id,"\n")]='\0';
@@ -1054,7 +1053,7 @@ void addClass(struct Classroom classrooms[], int *c){
 		}
 	}
 	while(1){
-		printf("Input teacher ID : ");
+		printf("\n\tInput teacher ID : ");
 		fgets(new_classroom.teacher_id,sizeof(new_classroom.teacher_id),stdin);
 		new_classroom.teacher_id[strcspn(new_classroom.teacher_id,"\n")]='\0';
 		if(strlen(new_classroom.teacher_id)==0){
@@ -1068,7 +1067,7 @@ void addClass(struct Classroom classrooms[], int *c){
 		}
 	}
 	while(1){
-		printf("Input teacher name : ");
+		printf("\n\tInput teacher name : ");
 		fgets(new_classroom.teacher_name,sizeof(new_classroom.teacher_name),stdin);
 		new_classroom.teacher_name[strcspn(new_classroom.teacher_name,"\n")]='\0';
 		if(strlen(new_classroom.teacher_name)==0){
