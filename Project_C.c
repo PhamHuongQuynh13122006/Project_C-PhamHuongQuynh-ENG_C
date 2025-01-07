@@ -32,7 +32,7 @@ struct Classroom {
     char class_name[10];
     char teacher_id[10];
     char teacher_name[50];
-    int student_number;//////
+    int student_number;
 };
 int n=5;
 struct Student students[100] = {
@@ -788,104 +788,109 @@ void addTeacher(struct Teacher teachers[], int *t) {
     infor_t(teachers, *t - 1);
     row_t();
 }
-void editTeacher(){
-	if(t <= 0){
-		printf("\n\tNo teacher data to edit ^ ^\n");
-		return;
-	}
-	char teacher_id[20];
-	printf("\n\tInput the ID of the teacher to edit : ");
-	scanf("%s",teacher_id);
-	getchar();
-	int found = -1;
-	int i;
-	for(i = 0;i < t; i++){
-		if(strcmp(teachers[i].teacher_id,teacher_id)==0){
-			found = i;
-			break;
-		}
-	}
-	if(found == -1){
-		printf("\n\t\tTeacher with ID %s not found.\n",teacher_id);
-		return;
-	}
-	printf("\n\t\tEditing information for teacher ID : %s\n",teacher_id);
-	while(1){
-		printf("\tInput teacher name (current : %s) : ",teachers[found].name);
-		char temp_name[50];
-		fgets(temp_name,sizeof(temp_name),stdin);
-		temp_name[strcspn(temp_name,"\n")]='\0';
-		if(strlen(temp_name)>0 && strlen(temp_name)<=49){
-			strcpy(teachers[found].name,temp_name);
-			break;//////////////
-		}else{
-			printf("\t\tError : Name cannot exceed 49 characters.\n");
-		}
-	}
-	while(1){
-		printf("\tInput birthday (day/month/year) (current : %02d/%02d/%04d) : ",teachers[found].birth.day,teachers[found].birth.month,teachers[found].birth.year);
-		int day,month,year;
-		if(scanf("%d/%d/%d",&day,&month,&year)==3 && day>=1 && day<=31 && month>=1 && month<=12 && year>=1900 && year<=2050){
-			teachers[found].birth.day = day;
-			teachers[found].birth.month = month;
-			teachers[found].birth.year = year;
-			break;
-		}
-		printf("\t\tError : Invalid date\n");
-		getchar();
-	}
-	while(1){
-		printf("\tInput gender (1 for Male or 0 for Female) (current : %s) : ",teachers[found].gender);
-		int gender_input;
-		scanf("%d",&gender_input);
-		if(gender_input==0 || gender_input==1){
-			teachers[found].gender = gender_input;
-			break;
-		}
-		printf("\t\tError : Gender must be 1 (Male) or 0 (Female)");
-	}
-	while(1){
-		printf("\n\tInput email (without @gmail.com) (current : %s) : ",teachers[found].email);
-		getchar();
-		char temp_email[20];
-		fgets(temp_email,sizeof(temp_email),stdin);
-		temp_email[strcspn(temp_email,"\n")]='\0';
-		if(strlen(temp_email)>0 && strlen(temp_email)<=19){
-			strcat(temp_email,"@gmail.com");
-			strcpy(teachers[found].email,temp_email);
-			break;
-		}else{
-			printf("\n\tError : Email prefix cannot exceed 19 characters ^ ^\n");
-		}
-	}
-	while(1){
-		printf("\tInput phone (current : %s) : ",teachers[found].phone);
-		char temp_phone[20];
-		fgets(temp_phone,sizeof(temp_phone),stdin);
-		temp_phone[strcspn(temp_phone,"\n")]='\0';
-		if(strlen(temp_phone)>0 && strlen(temp_phone)<=19 && strspn(temp_phone, "0123456789") == strlen(temp_phone)){
-			strcpy(teachers[found].phone,temp_phone);
-			break;
-		}else{
-			printf("\n\tError : Phone number must be numeric and cannot exceed 19 digits ^ ^\n");
-		}
-	}
-    while(1){
-		printf("\tInput number of classroom number (current : %d) : ",teachers[found].class_number);
-		int course;
-		//fflush(stdin);
-		getchar();
-		scanf("%d",&course);
-		if(course>=0){
-			teachers[found].class_number = course;
-			break;
-		}
-		printf("\n\t\tError : Number of courses must be a non-negative integer ^ ^\n");
-		//fflush(stdout);
-		getchar();
-	}
-	printSlowly("\n\t\tTeacher information updated successfully",70);
-	printSlowly(" ...\n",120);
+void editTeacher() {
+    if (t <= 0) {
+        printf("\n\tNo teacher data to edit ^ ^\n");
+        return;
+    }
+    char teacher_id[20];
+    printf("\n\tInput the ID of the teacher to edit : ");
+    scanf("%s", teacher_id);
+    getchar();
+    int found = -1;
+    int i;
+    for (i = 0; i < t; i++) {
+        if (strcmp(teachers[i].teacher_id, teacher_id) == 0) {
+            found = i;
+            break;
+        }
+    }
+    if (found == -1) {
+        printf("\n\t\tTeacher with ID %s not found.\n", teacher_id);
+        return;
+    }
+    printf("\n\t\tEditing information for teacher ID : %s\n", teacher_id);
+    while (1) {
+        printf("\n\tInput teacher name (current : %s) : ", teachers[found].name);
+        char temp_name[50];
+        fgets(temp_name, sizeof(temp_name), stdin);
+        temp_name[strcspn(temp_name, "\n")] = '\0';
+        if (strlen(temp_name) > 0 && strlen(temp_name) <= 49) {
+            strcpy(teachers[found].name, temp_name);
+            break;
+        } else {
+            printf("\t\tError : Name cannot exceed 49 characters.\n");
+        }
+    }
+    while (1) {
+        printf("\tInput birthday (day/month/year) (current : %02d/%02d/%04d) : ", 
+            teachers[found].birth.day, 
+            teachers[found].birth.month, 
+            teachers[found].birth.year);
+        int day, month, year;
+        int result = scanf("%d/%d/%d", &day, &month, &year);
+        if (result == 3 && day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1900 && year <= 2050) {
+            teachers[found].birth.day = day;
+            teachers[found].birth.month = month;
+            teachers[found].birth.year = year;
+            break;
+        } else {
+            printf("\t\tError : Invalid date\n");
+            while (getchar() != '\n');
+        }
+    }
+    while (1) {
+        printf("\tInput gender (1 for Male or 0 for Female) (current : %d) : ", teachers[found].gender);
+        int gender_input;
+        if (scanf("%d", &gender_input) == 1 && (gender_input == 0 || gender_input == 1)) {
+            teachers[found].gender = gender_input;
+            break;
+        }
+        printf("\t\tError : Gender must be 1 (Male) or 0 (Female)\n");
+        while (getchar() != '\n');
+    }
+    while (1) {
+        printf("\tInput email (without @gmail.com) (current : %s) : ", teachers[found].email);
+        getchar();
+        char temp_email[20];
+        fgets(temp_email, sizeof(temp_email), stdin);
+        temp_email[strcspn(temp_email, "\n")] = '\0';
+        if (strlen(temp_email) > 0 && strlen(temp_email) <= 19) {
+            strcat(temp_email, "@gmail.com");
+            strcpy(teachers[found].email, temp_email);
+            break;
+        } else {
+            printf("\n\tError : Email prefix cannot exceed 19 characters ^ ^\n");
+        }
+    }
+    while (1) {
+        printf("\tInput phone (current : %s) : ", teachers[found].phone);
+        getchar();
+        char temp_phone[20];
+        fgets(temp_phone, sizeof(temp_phone), stdin);
+        temp_phone[strcspn(temp_phone, "\n")] = '\0';
+        if (strlen(temp_phone) > 0 && strlen(temp_phone) <= 19 && strspn(temp_phone, "0123456789") == strlen(temp_phone)) {
+            strcpy(teachers[found].phone, temp_phone);
+            break;
+        } else {
+            printf("\n\tError : Phone number must be numeric and cannot exceed 19 digits ^ ^\n");
+        }
+    }
+    while (1) {
+        printf("\tInput number of classroom number (current : %d) : ", teachers[found].class_number);
+        char course[6];
+        fgets(course, sizeof(course), stdin);
+        course[strcspn(course, "\n")] = '\0';
+        int class_number = atoi(course);
+        if (class_number >= 0) {
+            teachers[found].class_number == class_number;
+            break;
+        }
+        printf("\n\t\tError : Number of classrooms must be a non-negative integer ^ ^\n");
+    }
+
+    printSlowly("\n\t\tTeacher information updated successfully", 60);
+    printSlowly(" ...\n", 100);
 }
 void deletedTeacher(){
 	if(t <= 0){
