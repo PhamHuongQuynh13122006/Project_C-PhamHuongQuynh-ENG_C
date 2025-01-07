@@ -489,7 +489,7 @@ void editStudent() {
             students[found].date.year = year;
             break;
         }
-        printf("\n\tError: Invalid date. Please try again.\n");
+        printf("\n\tError: Invalid date\n");
         getchar();
     }
     while (1) {
@@ -561,7 +561,7 @@ void searchStudent() {
         }
     }
     int found = 0;
-    printf("\nSearching for students with name containing \"%s\"...\n", search);
+    printf("\nSearching for students with name containing ...\n");
     int i;
 	for (i = 0; i < n; i++) {
         if (strstr(students[i].name, search) != NULL) {
@@ -630,7 +630,7 @@ void sort_Student_i_or_d() {
     char choice;
     int check = 0;
     do {
-        printf("\n   Choose the order in which the student list is sorted:\n");
+        printf("\n   Choose the order in which the student list sorted name is:\n");
         printf("\n\t\t[1]. Increase\n");
         printf("\t\t[2]. Decrease\n");
         printf("\n\tYour choice: ");
